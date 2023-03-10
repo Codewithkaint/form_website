@@ -1,72 +1,67 @@
-let names=document.getElementById('name')
-let smal=document.querySelector('small')
-let email=document.getElementById('email')
-let num=document.getElementById('num')
-let btn=document.getElementById('btns')
-let pass=document.getElementById('pass')
-let fail=document.getElementById('fail')
-let ns=false
-let el=false
-let nm=false
-names.addEventListener('blur',function(){
-    let reg=/^[a-zA-Z]([0-9a-zA-Z]){2,10}$/
-    let st=names.value
-    if(reg.test(st)){
-        console.log('VALID NAME')
-        names.classList.remove('is-invalid')
-        
-        ns=true
-    }
-    else{
-        console.log('NOT VALID NAME')
-        names.classList.add('is-invalid')
-        ns=false
- 
-    }
-})
-email.addEventListener('blur',function(){
-    let reg=/^([_\.\-a-zA-Z0-9])+@([a-zA-Z]+)\.([a-zA-Z]){2,7}$/
-    let st=email.value
-    if(reg.test(st)){
-        console.log('VALID EMAIL-ID')
-        email.classList.remove('is-invalid')
-        
-        el=true
-    }
-    else{
-        console.log('NOT VALID EMAIL')
-        email.classList.add('is-invalid')
-        el=false
- 
-    }
-})
-num.addEventListener('blur',function(){
-    let reg=/^[0-9]{10}$/
-    let st=num.value
-    if(reg.test(st)){
-        console.log('VALID NUMBER')
-        num.classList.remove('is-invalid')
-        
-        nm=true
-    }
-    else{
-        console.log('IN-VALID NUMBER')
-        num.classList.add('is-invalid')
-        nm=false
- 
-    }
-})
-btn.addEventListener('click',(e)=>{
-    e.preventDefault()
-    if(ns&&nm&&el){
-        pass.classList.add('show')
-        $('#fail').hide();
-        $('#pass').show();
-        
-    }
-    else{
-        fail.classList.add('show')
-        $('#pass').hide()
-        $('#fail').show()
-    }
-})
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+</head>
+<body>
+
+<h3>Contact Form</h3>
+
+<div class="container">
+  <form action="/action_page.php">
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+    <label for="country">Country</label>
+    <select id="country" name="country">
+      <option value="australia">Australia</option>
+      <option value="canada">Canada</option>
+      <option value="usa">USA</option>
+    </select>
+
+    <label for="subject">Subject</label>
+    <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+</body>
+</html>

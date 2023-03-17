@@ -1,67 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box;}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student details</title>
+  <style>
+    /* The following tag selector body use the font-family and background-color properties for body of a page*/
 
-input[type=text], select, textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  resize: vertical;
-}
+    body {
+      font-family: Calibri, Helvetica, sans-serif;
+      background-color: #f1c639;
+    }
 
-input[type=submit] {
-  background-color: #04AA6D;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+    /* Following container class used padding for generate space around it, and also use a background-color for specify the color lightblue as a background */
+    .container {
+      padding: 50px;
+      background-color: #b3b6ba;
+    }
 
-input[type=submit]:hover {
-  background-color: #45a049;
-}
+    /* The following tag selector input use the different properties for the text filed. */
+    input[type=text] {
+      width: 100%;
+      padding: 15px;
+      margin: 5px 0 22px 0;
+      display: inline-block;
+      border: none;
+      background: #f1f1f1;
+    }
 
-.container {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
-</style>
+    input[type=text]:focus {
+      background-color: orange;
+      outline: none;
+    }
+
+    div {
+      padding: 10px 0;
+    }
+
+    hr {
+      border: 1px solid #f1f1f1;
+      margin-bottom: 25px;
+    }
+
+    /* The following tag selector button uses the different properties for the Button. */
+    button {
+      background-color: #51b51f;
+      color: white;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      padding: 16px 20px;
+      width: 100%;
+      opacity: 0.9;
+    }
+
+    /* The following tag selector hover uses the opacity property for the Button which select button when you mouse over it. */
+    button:hover {
+      opacity: 1;
+    }
+  </style>
 </head>
+
 <body>
+  <div class="container">
+    <center>
+      <h1 style="font-size: 4vw;"> Registration Form</h1>
+    </center>
+    <hr>
 
-<h3>Contact Form</h3>
+    <label> Name </label> <input id="Namebox" type="text"><br><br>
+    <label> Roll No </label> <input id="Rollbox" type="text"><br><br>
+    <label> Section </label> <input id="Secbox" type="text"><br><br>
+    <label> Student ID </label> <input id="IDbox" type="text">
+    <br>
+    <button id="Insbtn">Insert</button>
+  </div>
 
-<div class="container">
-  <form action="/action_page.php">
-    <label for="fname">First Name</label>
-    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+  <!---------------------------CONFIG Firebase------------------------------>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+    
+    const firebaseConfig = {
+       apiKey: "AIzaSyCTYm1ks7IPU4LQTpy454t61R01KvvP5ZA",
+       authDomain: "qr-based.firebaseapp.com",
+       databaseURL: "https://qr-based-default-rtdb.firebaseio.com",
+       projectId: "qr-based",
+       storageBucket: "qr-based.appspot.com",
+       messagingSenderId: "1069943626164",
+       appId: "1:1069943626164:web:7a7fd13e3c4c38690e7ae1",
+       measurementId: "G-Z49130CKFY"
+    };
 
-    <label for="lname">Last Name</label>
-    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
 
-    <label for="country">Country</label>
-    <select id="country" name="country">
-      <option value="australia">Australia</option>
-      <option value="canada">Canada</option>
-      <option value="usa">USA</option>
-    </select>
+    import { getDatabase, ref, set, child, update, remove } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js";
 
-    <label for="subject">Subject</label>
-    <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+    const db = getDatabase();
 
-    <input type="submit" value="Submit">
-  </form>
-</div>
+    // ------------------------------Refrences---------------------------------
 
+    var namebox = document.getElementById("Namebox")
+    var rollbox = document.getElementById("Rollbox")
+    var secbox = document.getElementById("Secbox")
+    var idbox = document.getElementById("IDbox")
+
+    var insBtn = document.getElementById("Insbtn")
+
+
+    // -----------------------------Insert Data Function------------------------
+
+    function InsertData() {
+      set(ref(db, "TheStudents/" + rollbox.value), {
+        NameofStd: namebox.value,
+        RollNo: rollbox.value,
+        Section: secbox.value,
+        StudentID: idbox.value,
+      })
+        .then(() => {
+          alert("data stored successfuly");
+          window.location.replace("https://codewithkaint.github.io/Atendence_project/")             //  This was added to redirect to main page after record adding
+        
+        })
+        .catch((error) => {
+          alert("unsuccessful, error" + error);
+          
+        });
+    }
+
+    // -----------------------------Insert Data Function Call on click------------------------
+
+    insBtn.addEventListener('click', InsertData);
+
+  </script>
 </body>
+
 </html>
